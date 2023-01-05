@@ -52,7 +52,7 @@ func (c *Client) Update(name, email string) error {
 	return nil
 }
 
-func (c *Client) AddAcount(account *Account) error {
+func (c *Client) AddAccount(account *Account) error {
 	if account.Client.ID != c.ID {
 		return errors.New("account does not belong to client")
 	}
