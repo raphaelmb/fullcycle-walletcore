@@ -46,3 +46,19 @@ func (a *AccountDB) Save(account *entity.Account) error {
 	}
 	return nil
 }
+
+func (a *AccountDB) UpdateBalance(acccount *entity.Account) error {
+	stmt, err := a.DB.Prepare("UPDATE accounts SET balance = ? WHERE id = ?")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(acccount.Balance, acccount.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+
+}
