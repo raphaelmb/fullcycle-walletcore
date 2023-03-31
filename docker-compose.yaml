@@ -1,12 +1,20 @@
 version: '3'
 
 services:
-  app:
-    build: .
+  wallet-core-ms:
+    build: ./wallet-core-ms
     volumes:
-      - .:/app
+      - ./wallet-core-ms:/app
     ports:
       - 8080:8080
+
+  balance-ms:
+    build: ./balance-ms
+    volumes:
+      - ./balance-ms:/app
+    ports:
+      - 3003:3003
+
   mysql:
     image: mysql:5.7
     environment:
