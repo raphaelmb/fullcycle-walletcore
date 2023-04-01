@@ -1,21 +1,21 @@
 package kafka
 
-import ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
+import "github.com/confluentinc/confluent-kafka-go/kafka"
 
 type Consumer struct {
-	ConfigMap *ckafka.ConfigMap
+	ConfigMap *kafka.ConfigMap
 	Topics    []string
 }
 
-func NewConsumer(configMap *ckafka.ConfigMap, topics []string) *Consumer {
+func NewConsumer(configMap *kafka.ConfigMap, topics []string) *Consumer {
 	return &Consumer{
 		ConfigMap: configMap,
 		Topics:    topics,
 	}
 }
 
-func (c *Consumer) Consume(msgChan chan *ckafka.Message) error {
-	consumer, err := ckafka.NewConsumer(c.ConfigMap)
+func (c *Consumer) Consume(msgChan chan *kafka.Message) error {
+	consumer, err := kafka.NewConsumer(c.ConfigMap)
 	if err != nil {
 		panic(err)
 	}

@@ -3,19 +3,19 @@ package kafka
 import (
 	"encoding/json"
 
-	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 type Producer struct {
-	ConfigMap *ckafka.ConfigMap
+	ConfigMap *kafka.ConfigMap
 }
 
-func NewKafkaProducer(configMap *ckafka.ConfigMap) *Producer {
+func NewKafkaProducer(configMap *kafka.ConfigMap) *Producer {
 	return &Producer{ConfigMap: configMap}
 }
 
 func (p *Producer) Publish(msg any, key []byte, topic string) error {
-	producer, err := ckafka.NewProducer(p.ConfigMap)
+	producer, err := kafka.NewProducer(p.ConfigMap)
 	if err != nil {
 		return err
 	}
@@ -25,8 +25,8 @@ func (p *Producer) Publish(msg any, key []byte, topic string) error {
 		return err
 	}
 
-	message := &ckafka.Message{
-		TopicPartition: ckafka.TopicPartition{Topic: &topic, Partition: ckafka.PartitionAny},
+	message := &kafka.Message{
+		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
 		Value:          msgJson,
 		Key:            key,
 	}

@@ -3,7 +3,7 @@ package kafka
 import (
 	"testing"
 
-	ckafka "github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -21,7 +21,7 @@ func TestProducerPublish(t *testing.T) {
 	}
 	// outputJson, _ := json.Marshal(expectedOutput)
 
-	configMap := ckafka.ConfigMap{
+	configMap := kafka.ConfigMap{
 		"test.mock.num.brokers": 3,
 	}
 	producer := NewKafkaProducer(&configMap)
