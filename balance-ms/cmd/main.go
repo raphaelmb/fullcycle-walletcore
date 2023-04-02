@@ -3,46 +3,31 @@ package main
 import (
 	"fmt"
 
-	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/raphaelmb/fullcycle-balance-ms/internal/web/webserver"
 )
 
-type Consumer struct {
-	ConfigMap *kafka.ConfigMap
-	Topics    []string
-}
-
-func NewConsumer(configMap *kafka.ConfigMap, topics []string) *Consumer {
-	return &Consumer{
-		ConfigMap: configMap,
-		Topics:    topics,
-	}
-}
-
-func (c *Consumer) Consume() error {
-	consumer, err := kafka.NewConsumer(c.ConfigMap)
-	if err != nil {
-		fmt.Println("Consumer error", err.Error())
-	}
-
-	consumer.SubscribeTopics(c.Topics, nil)
-
-	for {
-		msg, err := consumer.ReadMessage(-1)
-		if err == nil {
-			fmt.Println(string(msg.Value))
-		}
-	}
-}
-
 func main() {
-	topics := []string{"transactions"}
-	configMap := &kafka.ConfigMap{
-		"bootstrap.servers": "kafka:29092",
-		"group.id":          "wallet",
-		"client.id":         "consumer",
-		"auto.offset.reset": "earliest",
-	}
-	consumer := NewConsumer(configMap, topics)
+	// db, err := sql.Open("mysql", "root:root@tcp(mysql:3306)/wallet?charset=utf8&parseTime=True&loc=Local")
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer db.Close()
 
-	consumer.Consume()
+	// topics := []string{"transactions"}
+	// configMap := &kafka.ConfigMap{
+	// 	"bootstrap.servers": "kafka:29092",
+	// 	"group.id":          "wallet",
+	// 	"client.id":         "consumer",
+	// 	"auto.offset.reset": "earliest",
+	// }
+
+	// consumer := ckafka.NewConsumer(configMap, topics)
+
+	// go consumer.Consume()
+
+	webserver := webserver.NewWebServer(":3003")
+	// webserver.AddHandler("/transactions", transactionHandler.CreateTransaction)
+
+	fmt.Println("Server is running")
+	webserver.Start()
 }
