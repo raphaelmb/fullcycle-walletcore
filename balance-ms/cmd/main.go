@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	// db, err := sql.Open("mysql", "root:root@tcp(mysql:3306)/wallet?charset=utf8&parseTime=True&loc=Local")
+	// db, err := sql.Open("mysql", "root:root@tcp(mysql:3307)/balance?charset=utf8&parseTime=True&loc=Local")
 	// if err != nil {
 	// 	panic(err)
 	// }
@@ -26,7 +26,7 @@ func main() {
 	// go consumer.Consume()
 
 	webserver := webserver.NewWebServer(":3003")
-	// webserver.AddHandler("/transactions", transactionHandler.CreateTransaction)
+	// webserver.AddHandler("/balances/{account_id}", web.BalanceById)
 
 	fmt.Println("Server is running")
 	webserver.Start()

@@ -15,7 +15,7 @@ services:
     ports:
       - 3003:3003
 
-  mysql:
+  mysql-wallet:
     image: mysql:5.7
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -24,7 +24,18 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - .docker/mysql:/var/lib/mysql
+      - .docker-mysqlwallet/mysql:/var/lib/mysql
+
+  mysql-balance:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: wallet
+      MYSQL_PASSWORD: root
+    ports:
+      - 3307:3307
+    volumes:
+      - .docker-mysqlbalance/mysql:/var/lib/mysql
 
   zookeeper:
     image: "confluentinc/cp-zookeeper:6.1.0"
