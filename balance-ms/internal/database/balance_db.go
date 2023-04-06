@@ -17,11 +17,21 @@ func NewBalanceDB(db *sql.DB) *BalanceDB {
 }
 
 func (b *BalanceDB) Save(balance *entity.Balance) error {
+	stmt, err := b.DB.Prepare("INSERT INTO balances (account_id, amount) VALUES (?, ?)")
+	if err != nil {
+		return err
+	}
+	defer stmt.Close()
+
+	_, err = stmt.Exec(balance.AccountID, balance.Amount)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
 func (b *BalanceDB) List(id string) (*entity.Balance, error) {
-	var balance entity.Balance
+	balance := &entity.Balance{}
 	stmt, err := b.DB.Prepare("SELECT * FROM balances WHERE id = ?")
 	if err != nil {
 		return nil, err
@@ -29,10 +39,8 @@ func (b *BalanceDB) List(id string) (*entity.Balance, error) {
 	defer stmt.Close()
 
 	row := stmt.QueryRow(id)
-	err = row.Scan(&balance.ID, &balance.AccountID, &balance.Amount, &balance.CreatedAt, &balance.UpdatedAt)
-	if err != nil {
+	if err := row.Scan(&balance.ID, &balance.AccountID, &balance.Amount, &balance.CreatedAt, &balance.UpdatedAt); err != nil {
 		return nil, err
 	}
-
-	return &balance, nil
+	return balance, nil
 }

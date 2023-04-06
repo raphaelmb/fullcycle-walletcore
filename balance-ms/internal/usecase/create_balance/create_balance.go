@@ -6,7 +6,8 @@ import (
 )
 
 type CreateBalanceInputDTO struct {
-	Balance *entity.Balance
+	AccountID string  `json:"account_id"`
+	Amount    float64 `json:"amount"`
 }
 
 type CreateBalanceUseCase struct {
@@ -20,7 +21,8 @@ func NewCreateBalanceUseCase(b gateway.BalanceGateway) *CreateBalanceUseCase {
 }
 
 func (uc *CreateBalanceUseCase) Execute(input CreateBalanceInputDTO) error {
-	err := uc.BalanceGateway.Save(input.Balance)
+	balance := entity.NewBalance(input.AccountID, input.Amount)
+	err := uc.BalanceGateway.Save(balance)
 	if err != nil {
 		return err
 	}
