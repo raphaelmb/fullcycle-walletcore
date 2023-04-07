@@ -30,7 +30,7 @@ func (b *BalanceDB) Save(balance *entity.Balance) error {
 	return nil
 }
 
-func (b *BalanceDB) List(id string) (*entity.Balance, error) {
+func (b *BalanceDB) GetByID(id string) (*entity.Balance, error) {
 	balance := &entity.Balance{}
 	stmt, err := b.DB.Prepare("SELECT * FROM balances WHERE id = ?")
 	if err != nil {

@@ -46,12 +46,13 @@ func (s *BalanceDBTestSuite) TestSave() {
 	s.Nil(err)
 }
 
-// func (s *BalanceDBTestSuite) TestList() {
-// 	balance := entity.NewBalance("1", 10.0)
-// 	s.balanceDB.Save(balance)
+func (s *BalanceDBTestSuite) TestGetByID() {
+	balance := entity.NewBalance("1", 10.0)
+	err := s.balanceDB.Save(balance)
+	s.Nil(err)
 
-// 	balanceDB, err := s.balanceDB.List(balance.ID)
-// 	s.Nil(err)
-// 	s.Equal(balance.ID, balanceDB.ID)
-// 	s.Equal(balance.Amount, balanceDB.Amount)
-// }
+	balanceDB, err := s.balanceDB.GetByID(balance.ID)
+	s.Nil(err)
+	s.Equal(balance.ID, balanceDB.ID)
+	s.Equal(balance.Amount, balanceDB.Amount)
+}
